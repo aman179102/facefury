@@ -1,0 +1,17 @@
+# FaceFury: Battle Platformer - Dependencies
+# Python 3.10+ required
+
+# Game Engine
+pygame>=2.5.0
+
+# Face Detection
+opencv-python>=4.8.0
+
+# Image Processing
+Pillow>=10.0.0
+
+# Optional: NumPy for advanced image operations
+numpy>=1.24.0
+
+# Audio: MP3 support (optional but recommended)
+pydub>=0.25.1
