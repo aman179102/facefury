@@ -1,8 +1,6 @@
 # FaceFury: Battle Platformer
 
-A fun, meme-worthy 2D platformer where your face becomes the hero! Upload your photo and battle enemies with custom faces in this Mario-style platformer game.
-
-![Game Title](assets/images/title_placeholder.png)
+A fun, meme-worthy 2D platformer where your face becomes the hero! Upload your photo and battle enemies with custom faces in this Mario-style platformer game. Now with **Android support** and **customizable voice effects**!
 
 ## Features
 
@@ -13,14 +11,27 @@ A fun, meme-worthy 2D platformer where your face becomes the hero! Upload your p
 - **Smooth physics**: Realistic gravity and collision detection
 - **Screenshot feature**: Capture your meme-worthy moments
 - **Procedural audio**: Generated sound effects if no files provided
+- **5 Built-in Sound Packs**: Default, Funny Voices, Retro 8-bit, Meme Sounds, Epic Battle
+- **Custom Voice Upload**: Manually add your own voice/sound for each game event (jump, kill, damage, etc.)
+- **Android 6+ Support**: Touch controls, auto-scaling, full APK build
+- **Touch Controls**: Virtual D-pad and jump button for mobile
 
 ## Requirements
 
+### Desktop
 - Python 3.10 or higher
 - Webcam or image files (for face upload)
 - See `requirements.txt` for package dependencies
 
+### Android APK Build
+- Python 3.10+
+- Buildozer (`pip install buildozer`)
+- Java JDK 17
+- Android SDK & NDK (auto-downloaded by Buildozer)
+
 ## Installation
+
+### Desktop
 
 1. **Clone or download** the project:
 ```bash
@@ -43,9 +54,29 @@ Or use the launcher:
 python run_game.py
 ```
 
+### Android APK Build
+
+1. **Install Buildozer**:
+```bash
+pip install buildozer cython
+```
+
+2. **Install system dependencies** (Ubuntu/Debian):
+```bash
+sudo apt-get install -y openjdk-17-jdk autoconf automake libtool zip unzip
+```
+
+3. **Build the APK**:
+```bash
+cd facefury
+buildozer android debug
+```
+
+4. The APK will be in `bin/` folder. Transfer to your Android 6+ device and install.
+
 ## How to Play
 
-### Controls
+### Desktop Controls
 
 | Key | Action |
 |-----|--------|
@@ -56,6 +87,15 @@ python run_game.py
 | **F12** | Take screenshot |
 | **R** | Restart (on game over) |
 | **ESC** | Return to menu |
+
+### Android Touch Controls
+
+| Control | Action |
+|---------|--------|
+| **Left arrow** (bottom-left) | Move left |
+| **Right arrow** (bottom-left) | Move right |
+| **JUMP button** (bottom-right) | Jump |
+| **Pause button** (top-right) | Pause/Resume |
 
 ### Gameplay Tips
 
@@ -78,35 +118,35 @@ python run_game.py
 - Works with or without glasses
 - The game will auto-detect and crop faces
 
-## Project Structure
+## Voice Effects System
 
-```
-facefury/
-├── main.py              # Entry point
-├── game/
-│   ├── engine.py        # Main game controller
-│   ├── player.py        # Player character
-│   ├── enemy.py         # Enemy AI
-│   ├── physics.py       # Physics & collision
-│   └── level.py         # Level system
-├── ui/
-│   ├── menu.py          # Menu screens
-│   └── hud.py           # HUD & game over
-├── face/
-│   ├── detector.py      # OpenCV face detection
-│   └── processor.py     # Pillow image processing
-├── assets/
-│   ├── sounds/          # Audio files (optional)
-│   └── images/          # Image assets
-└── __init__.py
-```
+FaceFury has a powerful voice effects system with **5 built-in sound packs** plus the ability to **add your own custom voice files** for each game event.
 
-## Customizing Audio & Voice Effects
+### Built-in Sound Packs
 
-FaceFury supports custom sound effects and voice files! You can replace the default procedural sounds with your own recordings, memes, or funny voice clips.
+| Pack | Style |
+|------|-------|
+| **Default** | Classic beep-boop sounds |
+| **Funny Voices** | Silly cartoon sounds with sweeps and wobbles |
+| **Retro 8-bit** | Classic chiptune square wave style |
+| **Meme Sounds** | Internet meme inspired effects |
+| **Epic Battle** | Deep dramatic tones |
 
-### Supported Sound Files
+Use the **"Voice Effects"** button on the main menu to:
+- Switch between built-in packs using the **left/right arrows**
+- **Preview** each sound (jump, kill, damage, win, etc.)
+- **Upload your own voice file** for any individual sound event
 
+### Adding Your Own Voice/Sound Files
+
+#### In-Game Upload (Recommended)
+1. Click **"Voice Effects"** from the main menu
+2. For each sound event (Jump, Kill Enemy, Damage, etc.), click **"Add Your Voice"**
+3. Select a `.wav`, `.mp3`, or `.ogg` file from your device
+4. The sound plays immediately as a preview
+5. Your custom sound overrides the pack's default for that event
+
+#### Manual File Placement
 Create a `facefury/assets/sounds/` folder and add these files:
 
 | File | Event | Format |
@@ -120,50 +160,21 @@ Create a `facefury/assets/sounds/` folder and add these files:
 | `initial.wav/.mp3` | Game start & level transition | WAV/MP3/OGG |
 | `bgm.mp3/.wav` | Background music (low vol, loops) | MP3/WAV/OGG |
 
-### Adding Your Own Voice/Meme Sounds
-
-#### Method 1: Record Your Own Voice
+#### Recording Your Own Voice
 
 **IMPORTANT: Record at MAXIMUM volume!**
 
-1. **Before recording:**
-   - Set your **microphone volume to MAXIMUM** 🔊
-   - Check phone settings → Sound → Microphone level
-   - Speak **LOUD and CLEAR** - don't be shy!
-   - Test recording first to check volume
-
-2. **Record on your phone** or use any recording software
-
-3. **Say funny things** like:
-   - **Initial/Start**: "Let's go!", "Game on!", "Here we go!", "Face Fury!"
-   - Jump: "Boing!", "Wheee!", "Up we go!"
-   - Hit: "Gotcha!", "Take that!", "Boom!"
-   - Damage: "Ouch!", "Why me?!", "Not fair!"
-   - Win: "Victory!", "I'm the best!", "EZ game!"
-3. **Save as `.wav` or `.ogg`** format
-4. **Copy to** `facefury/assets/sounds/`
-
-#### Method 2: Use Meme Sound Clips
-
-1. **Download meme sounds** from sites like:
-   - MyInstants.com
-   - Freesound.org
-   - YouTube (use converter to get audio)
-2. **Rename to match** the file names above
-3. **Place in** `facefury/assets/sounds/`
-
-#### Method 3: Text-to-Speech (Free)
-
-Use free TTS tools to generate voice:
-- **Windows**: Use built-in "Narrator" or Balabolka
-- **Mac**: Use "Say" command in Terminal
-- **Online**: TTSMP3.com, VoiceMaker.in
-
-Example (Mac Terminal):
-```bash
-say -v "Alex" "Boing!" -o jump.aiff
-# Convert to wav using any converter
-```
+1. Set your microphone volume to maximum
+2. Speak loud and clear
+3. Suggested voice lines:
+   - **Game Start**: "Let's go!", "Game on!", "Face Fury!"
+   - **Jump**: "Boing!", "Wheee!", "Up we go!"
+   - **Kill Enemy**: "Gotcha!", "Take that!", "Boom!"
+   - **Damage**: "Ouch!", "Why me?!", "Not fair!"
+   - **Win**: "Victory!", "I'm the best!", "EZ game!"
+   - **Game Over**: "Nooo!", "Try again!", custom meme clips
+4. Save as `.wav` or `.ogg` format
+5. Use the in-game uploader or copy to `facefury/assets/sounds/`
 
 ### Audio Format Requirements
 
@@ -172,34 +183,43 @@ say -v "Alex" "Boing!" -o jump.aiff
 - **Channels**: Mono or Stereo
 - **Duration**: Keep short (0.1-2 seconds for SFX)
 
-### Where to Get Free Sound Effects
+## Project Structure
 
-| Website | Type |
-|---------|------|
-| freesound.org | Free community sounds |
-| mixkit.co | Free sound effects |
-| zapsplat.com | Free with account |
-| soundbible.com | Free sounds |
-| myinstants.com | Meme sounds |
+```
+facefury/
+├── main.py              # Entry point (Android + Desktop)
+├── game/
+│   ├── engine.py        # Main game controller
+│   ├── player.py        # Player character
+│   ├── enemy.py         # Enemy AI
+│   ├── physics.py       # Physics & collision
+│   └── level.py         # Level system
+├── ui/
+│   ├── menu.py          # Menu screens
+│   ├── hud.py           # HUD & game over
+│   ├── sound_settings.py  # Voice effects settings UI
+│   └── touch_controls.py  # Android touch controls
+├── face/
+│   ├── detector.py      # OpenCV face detection
+│   └── processor.py     # Pillow image processing
+├── assets/
+│   ├── audio.py         # Audio manager with sound packs
+│   ├── sounds/          # Custom audio files (optional)
+│   └── images/          # Image assets
+└── __init__.py
+buildozer.spec           # Android APK build config
+```
 
-### Procedural Sounds (Default)
+## Android Specific Notes
 
-If no sound files are provided, the game **automatically generates** beep/boop sounds using code. Custom files will override these!
-
-### Troubleshooting Audio
-
-**Sound not playing?**
-- Check file format (WAV is most reliable)
-- Verify file is in correct folder: `facefury/assets/sounds/`
-- Check system volume and pygame mixer
-
-**Sound too loud/quiet?**
-- Adjust volume in your audio editor
-- Or modify `assets/audio.py` - change `sound_volume` value (0.0 to 1.0)
-
-**Game crashes with custom sounds?**
-- Ensure file isn't corrupted
-- Try converting to standard WAV: 44.1kHz, 16-bit, mono
+- **Minimum Android version**: 6.0 (API 23)
+- **Target Android version**: API 33
+- **Supported architectures**: arm64-v8a, armeabi-v7a
+- Touch controls appear automatically on Android
+- File dialogs use Android native file picker
+- The game auto-scales to your device's screen resolution
+- App pauses/resumes properly when switching apps
+- Default face images are bundled for immediate play
 
 ## Troubleshooting
 
@@ -210,13 +230,18 @@ If no sound files are provided, the game **automatically generates** beep/boop s
 
 ### Game runs slow
 - Close other applications
-- Lower your screen resolution
 - The game runs at 60 FPS by default
 
 ### Sound not working
 - Check your system volume
 - The game uses pygame mixer - ensure audio drivers are working
 - Procedural sounds work without any sound files
+
+### APK Build Issues
+- Make sure Java JDK 17 is installed: `java -version`
+- Run `buildozer android clean` before rebuilding
+- Check `buildozer.spec` for correct settings
+- Logs are in `.buildozer/` directory
 
 ## Development
 
@@ -228,6 +253,19 @@ Edit `game/level.py` and add to `_build_level()` method:
 def _build_level_3(self):
     # Your level design here
     self.platforms.append(Platform(300, 400, 100, 20))
+```
+
+### Adding New Sound Packs
+
+Edit `assets/audio.py` and add to `SOUND_PACK_SPECS`:
+
+```python
+"my_pack": {
+    "name": "My Custom Pack",
+    "description": "My awesome sounds",
+    "jump": {"type": "tone", "freq": 500, "dur": 0.1, "wave": "sine", "fade": True},
+    # ... define all sound events
+}
 ```
 
 ### Custom Face Processing
@@ -246,6 +284,7 @@ MIT License - Feel free to use, modify, and share!
 - Built with **Pygame** - https://www.pygame.org/
 - Face detection with **OpenCV** - https://opencv.org/
 - Image processing with **Pillow** - https://python-pillow.org/
+- Android packaging with **Buildozer** - https://buildozer.readthedocs.io/
 
 ---
 
