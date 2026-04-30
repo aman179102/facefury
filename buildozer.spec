@@ -26,7 +26,10 @@ version = 1.0.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,pygame,opencv-python-headless,pillow,numpy
+requirements = python3==3.11.6,pygame==2.5.2,pillow,numpy
+# Note: opencv-python-headless is NOT included for Android builds.
+# Face detection uses a fallback mode on Android (pre-bundled faces).
+# If you need OpenCV on Android, use the opencv p4a recipe instead.
 
 # (str) Presplash of the application (an image displayed while loading)
 #presplash.filename = %(source.dir)s/assets/images/presplash.png

@@ -1,7 +1,12 @@
 """Face detection using OpenCV Haar Cascade classifier."""
 
-import cv2
-import numpy as np
+try:
+    import cv2
+    import numpy as np
+    CV2_AVAILABLE = True
+except ImportError:
+    CV2_AVAILABLE = False
+
 from typing import Tuple, Optional, List
 
 
@@ -10,12 +15,15 @@ class FaceDetector:
     
     def __init__(self):
         """Initialize face detector with Haar cascade classifier."""
+        self.face_cascade = None
+        if not CV2_AVAILABLE:
+            return
         # Use OpenCV's built-in Haar cascade for face detection
         cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
         self.face_cascade = cv2.CascadeClassifier(cascade_path)
         
         if self.face_cascade.empty():
-            raise RuntimeError("Failed to load Haar cascade classifier")
+            self.face_cascade = None
     
     def detect_face(self, image_path: str) -> Optional[Tuple[int, int, int, int]]:
         """
@@ -27,6 +35,8 @@ class FaceDetector:
         Returns:
             Tuple of (x, y, width, height) or None if no face found
         """
+        if not CV2_AVAILABLE or self.face_cascade is None:
+            return None
         img = cv2.imread(image_path)
         if img is None:
             return None
@@ -58,6 +68,8 @@ class FaceDetector:
         Returns:
             List of (x, y, width, height) tuples
         """
+        if not CV2_AVAILABLE or self.face_cascade is None:
+            return []
         img = cv2.imread(image_path)
         if img is None:
             return []
