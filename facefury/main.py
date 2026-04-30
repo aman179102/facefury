@@ -326,6 +326,11 @@ class FaceFuryGame:
                 if self.touch_controls.pause_pressed:
                     self.game_engine.paused = not self.game_engine.paused
                     self.touch_controls.pause_pressed = False
+            else:
+                # Clear transient touch flags when not in-game to prevent
+                # stale input from triggering on game start
+                self.touch_controls.jump_just_pressed = False
+                self.touch_controls.pause_pressed = False
 
             # Update
             if self.in_game and self.game_engine:
