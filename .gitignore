@@ -29,7 +29,8 @@ MANIFEST
 
 # PyInstaller
 *.manifest
-*.spec
+# Note: buildozer.spec is tracked; only exclude PyInstaller specs
+#*.spec
 
 # Installer logs
 pip-log.txt
@@ -155,3 +156,8 @@ Thumbs.db
 tmp/
 temp/
 *.tmp
+
+# Buildozer (Android build artifacts)
+.buildozer/
+bin/
+*.apk
