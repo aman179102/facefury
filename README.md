@@ -35,7 +35,7 @@ A fun, meme-worthy 2D platformer where your face becomes the hero! Upload your p
 
 1. **Clone or download** the project:
 ```bash
-git clone <repository-url>
+git clone https://github.com/aman179102/facefury.git
 cd facefury
 ```
 
