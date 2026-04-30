@@ -56,8 +56,6 @@ class TouchControls:
         if not self.enabled:
             return False
 
-        self.jump_just_pressed = False
-
         if event.type == pygame.FINGERDOWN:
             x = int(event.x * self.sw)
             y = int(event.y * self.sh)
