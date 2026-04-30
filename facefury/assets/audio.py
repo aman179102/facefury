@@ -112,11 +112,17 @@ class AudioManager:
         self.available_packs = list(SOUND_PACK_SPECS.keys())
         self.custom_sounds: Dict[str, pygame.mixer.Sound] = {}
 
-        # Initialize mixer
-        if not pygame.mixer.get_init():
-            pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=512)
+        # Initialize mixer (gracefully handle missing audio device)
+        self.mixer_available = False
+        try:
+            if not pygame.mixer.get_init():
+                pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=512)
+            self.mixer_available = True
+        except pygame.error:
+            print("Warning: Audio device not available. Sounds will be disabled.")
 
-        self._load_sounds()
+        if self.mixer_available:
+            self._load_sounds()
 
     def _load_sounds(self):
         """Load sound files from disk, then fill gaps with current pack."""
@@ -259,6 +265,8 @@ class AudioManager:
 
         Returns True on success.
         """
+        if not self.mixer_available:
+            return False
         try:
             sound = pygame.mixer.Sound(filepath)
         except pygame.error:
@@ -411,10 +419,14 @@ class AudioManager:
     # --- Playback API ---
 
     def play_sound(self, sound_name: str):
+        if not self.mixer_available:
+            return
         if sound_name in self.sounds:
             self.sounds[sound_name].play()
 
     def play_music(self, music_file: Optional[str] = None):
+        if not self.mixer_available:
+            return
         filepath = music_file if music_file else self.music_path
         if filepath and os.path.exists(filepath):
             try:
@@ -427,13 +439,19 @@ class AudioManager:
                 pass
 
     def stop_music(self):
+        if not self.mixer_available:
+            return
         pygame.mixer.music.stop()
         self.music_playing = False
 
     def pause_music(self):
+        if not self.mixer_available:
+            return
         pygame.mixer.music.pause()
 
     def unpause_music(self):
+        if not self.mixer_available:
+            return
         pygame.mixer.music.unpause()
 
     def set_sound_volume(self, volume: float):

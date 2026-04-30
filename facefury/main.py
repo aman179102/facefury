@@ -316,12 +316,15 @@ class FaceFuryGame:
 
             # Apply touch controls to game engine
             if self.in_game and self.game_engine and self.touch_controls.enabled:
-                movement = self.touch_controls.get_movement()
-                if movement != 0:
-                    self.game_engine.player.move(movement)
-                if self.touch_controls.jump_just_pressed:
-                    if self.game_engine.player.jump():
-                        self.game_engine._play_sound('jump')
+                if not self.game_engine.paused and not self.game_engine.game_over:
+                    movement = self.touch_controls.get_movement()
+                    if movement != 0:
+                        self.game_engine.player.move(movement)
+                    if self.touch_controls.jump_just_pressed:
+                        if self.game_engine.player.jump():
+                            self.game_engine._play_sound('jump')
+                        self.touch_controls.jump_just_pressed = False
+                else:
                     self.touch_controls.jump_just_pressed = False
                 if self.touch_controls.pause_pressed:
                     self.game_engine.paused = not self.game_engine.paused
